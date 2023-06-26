@@ -1,4 +1,5 @@
 # RMeetingControl
+
 ### 1.项目介绍（当前版本为V0.1）
 
 使用go语言开发的一个在线会议demo。可以用来理解在线会议的部分业务。当前主要功能包含：
@@ -116,9 +117,7 @@ docker run --name redis -p 6379:6379 -d redis
 3. 服务端将发送有新用户的消息给当前会议室的所有成员
 4. 服务端将当前会议室的其他状态发送给新成员（能否开视频，能否发言……等）
 
-![截屏2023-06-26 下午1.23.10](/Users/raoraoningkang/Library/Application Support/typora-user-images/截屏2023-06-26 下午1.23.10.png)
-
-
+![截屏2023-06-26 下午5.42.09](https://p.ipic.vip/4m9x9i.png)
 
 ⚠️**4.2 用户发送消息业务逻辑（⚠️正在开发，还没有测试完成，当前为V0.1）：**
 
@@ -133,9 +132,7 @@ docker run --name redis -p 6379:6379 -d redis
 
 
 
-
-
-![截屏2023-06-26 下午2.05.18](https://p.ipic.vip/8hivi4.png)
+<img src="https://p.ipic.vip/74kt91.png" alt="截屏2023-06-26 下午5.41.10" style="zoom:50%;" />
 
 
 
