@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket测试页面</title>
+</head>
+<body>
+<div>
+    <button onclick="connectWebSocket()">连接 WebSocket</button>
+    <button onclick="sendMessage()">发送消息</button>
+</div>
+<div>
+    <textarea id="messageInput" rows="4" cols="50"></textarea>
+</div>
+<div>
+    <textarea id="messageOutput" rows="4" cols="50" readonly></textarea>
+</div>
+
+<script>
+    var socket;
+
+    function connectWebSocket() {
+        socket = new WebSocket("ws://localhost:8080/AddMeeting?username=a&meetingUid=9321f3ee-2830-4546-aa32-882fb4f9e898");
+        socket.onopen = function(event) {
+            console.log("WebSocket连接已建立");
+        };
+
+        socket.onmessage = function(event) {
+            var message = event.data;
+            console.log("收到消息：" + message);
+            appendMessageToOutput("收到消息：" + message);
+        };
+
+        socket.onclose = function(event) {
+            console.log("WebSocket连接已关闭");
+        };
+
+        socket.onerror = function(error) {
+            console.error("WebSocket发生错误：" + error);
+        };
+    }
+
+    function sendMessage() {
+        var messageInput = document.getElementById("messageInput");
+        var message = messageInput.value;
+
+        socket.send(message);
+        appendMessageToOutput("发送消息：" + message);
+
+        messageInput.value = "";
+    }
+
+    function appendMessageToOutput(message) {
+        var messageOutput = document.getElementById("messageOutput");
+        messageOutput.value += message + "\n";
+    }
+</script>
+</body>
+</html>
