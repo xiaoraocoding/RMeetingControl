@@ -11,6 +11,7 @@ func main() {
 	initialize.Log.SetLevel(initialize.Info)
 	initialize.NewMeetingGroup()
 	initialize.NewChanControl()
+	initialize.NewQueue()
 	// 下一次迭代使用yaml文件更改配置，目前只需要再此处即可进行修改
 	initialize.ConnectRedis("127.0.0.1:6379", "", 0)
 	r := gin.Default()
