@@ -21,8 +21,5 @@ func main() {
 	r.GET("/AddMeeting", api.AddMeeting)
 	r.GET("/Export", api.Export)
 	// 下面这些接口最好是直接使用客户端的长链接，将修改发送给服务端，这里为了理解业务，方便后端测试，
-	r.PUT("/ChangeVideoStatus", api.ChangeVideoStatus)
-	r.PUT("/ChangeMuteStatus", api.ChangeMuteStatus)
-	r.PUT("/ChangeNameStatus", api.ChangeNameStatus)
 	r.Run() // listen and serve on 0.0.0.0:8080
 }

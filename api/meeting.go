@@ -10,7 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
 	"github.com/gorilla/websocket"
-	"log"
 	"net/http"
 )
 
@@ -167,14 +166,23 @@ func AddMeeting(ctx *gin.Context) {
 			return
 		case message := <-messageCh: // 注意：此处逻辑正在修改，这里准备维护一个channel链接池，将任务直接丢进去，链接池直接进行消费
 			if err != nil {
-				log.Println("Failed to read message:", err)
+				initialize.Log.Error("Error Failed to read message:", err)
 				break
 			}
-			conten := initialize.Content{
-				Message:    message,
-				MeetingUid: meetingUid,
+			// 管理员进行了权限的修改
+			if util.IsSpecialMessage(message) {
+				err = util.Modify(message)
+				if err != nil {
+					initialize.Log.Error("Error Modify message error:", err)
+					return
+				}
+			} else {
+				conten := initialize.Content{
+					Message:    message,
+					MeetingUid: meetingUid,
+				}
+				initialize.Queue.SendMsgToQueue(conten)
 			}
-			initialize.Queue.SendMsgToQueue(conten)
 		}
 	}
 
