@@ -43,23 +43,3 @@ func (l *MyLog) print(level int, msgArr ...any) {
 		l.Logger.Print(msgArr...)
 	}
 }
-
-//var myLog = NewLog()
-//
-//func init() {
-//	myLog.SetFlags(log.LstdFlags | log.Lshortfile)
-//	myLog.SetPrefix("[工号:test01]")
-//	myLog.SetLevel(Info)
-//	//file, err := os.OpenFile("log.txt", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
-//	//if err != nil {
-//	//	fmt.Println(err)
-//	//	return
-//	//}
-//	//myLog.SetOutput(file)
-//}
-//
-//func main() {
-//	myLog.Debug("Debug 日志打印")
-//	myLog.Info("Info 日志打印")
-//	myLog.Error("Error 日志打印")
-//}

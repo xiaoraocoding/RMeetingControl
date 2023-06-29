@@ -20,22 +20,7 @@ func LeaveMeeting(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	msg := model.Message{
-		Notice: "有成员离开会议室",
-		Name:   user.Username,
-	}
-	jsonData, err := json.Marshal(msg)
-	if err != nil {
-		initialize.Log.Error("Error json error:", err)
-		return
-	}
 	model.Chan.AllChan[user.UserUid] <- 1 // 给通道传递消息，结束掉conn链接
-	// 开始上锁
-	content := initialize.Content{
-		Message:    jsonData,
-		MeetingUid: user.MeetingUid,
-	}
-	initialize.Queue.SendMsgToQueue(content)
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg":      "leaveMeeting success!",
 		"userUid":  user.UserUid,
@@ -135,6 +120,8 @@ func AddMeeting(ctx *gin.Context) {
 	}
 	model.Group[meetingUid].Mutex.Unlock()
 	messageCh := make(chan []byte)
+	// 每进行了一个conn链接，就为此conn开启一个心跳
+	go initialize.StartHeartbeat(meetingUid, userUuid)
 	go func() {
 		for {
 			messageType, message, err := conn.ReadMessage()
