@@ -6,7 +6,6 @@ import (
 	"RMeetingControl/model"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
-	"github.com/gorilla/websocket"
 	"net/http"
 )
 
@@ -28,19 +27,11 @@ func ChangeVideoStatus(ctx *gin.Context) {
 		initialize.Log.Error("Error Marshal changeRes error:", err)
 		return
 	}
-	model.Group[change.MeetingUid].Mutex.Lock()
-	model.Group[change.MeetingUid].IsVideo = change.IsVideo
-	for _, allConn := range model.Group[change.MeetingUid].AllConn {
-		err = allConn.Conn.WriteMessage(websocket.TextMessage, changeData)
-		if err != nil {
-			initialize.Log.Error("Error change meeting status error:", err)
-			ctx.JSON(http.StatusOK, gin.H{
-				"msg": "修改会议状态失败！",
-			})
-			return
-		}
+	content := initialize.Content{
+		changeData,
+		change.MeetingUid,
 	}
-	model.Group[change.MeetingUid].Mutex.Unlock()
+	initialize.Queue.SendMsgToQueue(content)
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg": "修改成功！",
 	})
@@ -64,19 +55,11 @@ func ChangeNameStatus(ctx *gin.Context) {
 		initialize.Log.Error("Error Marshal changeRes error:", err)
 		return
 	}
-	model.Group[change.MeetingUid].Mutex.Lock()
-	model.Group[change.MeetingUid].IsChangeName = change.IsChangeName
-	for _, allConn := range model.Group[change.MeetingUid].AllConn {
-		err = allConn.Conn.WriteMessage(websocket.TextMessage, changeData)
-		if err != nil {
-			initialize.Log.Error("Error change meeting status error:", err)
-			ctx.JSON(http.StatusOK, gin.H{
-				"msg": "修改会议状态失败！",
-			})
-			return
-		}
+	content := initialize.Content{
+		changeData,
+		change.MeetingUid,
 	}
-	model.Group[change.MeetingUid].Mutex.Unlock()
+	initialize.Queue.SendMsgToQueue(content)
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg": "修改成功！",
 	})
@@ -100,19 +83,11 @@ func ChangeMuteStatus(ctx *gin.Context) {
 		initialize.Log.Error("Error Marshal changeRes error:", err)
 		return
 	}
-	model.Group[change.MeetingUid].Mutex.Lock()
-	model.Group[change.MeetingUid].IsMute = change.IsMute
-	for _, allConn := range model.Group[change.MeetingUid].AllConn {
-		err = allConn.Conn.WriteMessage(websocket.TextMessage, changeData)
-		if err != nil {
-			initialize.Log.Error("Error change meeting status error:", err)
-			ctx.JSON(http.StatusOK, gin.H{
-				"msg": "修改会议状态失败！",
-			})
-			return
-		}
+	content := initialize.Content{
+		changeData,
+		change.MeetingUid,
 	}
-	model.Group[change.MeetingUid].Mutex.Unlock()
+	initialize.Queue.SendMsgToQueue(content)
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg": "修改成功！",
 	})

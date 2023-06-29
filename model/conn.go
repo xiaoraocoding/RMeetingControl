@@ -31,10 +31,6 @@ type ChanControl struct {
 
 var Chan ChanControl
 
-//meetingName := ctx.PostForm("meetingName")
-//username := ctx.PostForm("username")
-//isMute := ctx.PostForm("isMute")
-//isVideo := ctx.PostForm("isVideo")
 type Client struct {
 	MeetingName string `json:"meeting_name,omitempty"`
 	Username    string `json:"username,omitempty"`
