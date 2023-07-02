@@ -6,11 +6,11 @@
 </head>
 <body>
 <div>
-    <button onclick="connectWebSocket()">连接 WebSocket</button>
+    <button onclick="connectWebSocket()" color="red">连接 WebSocket</button>
     <button onclick="sendMessage()">发送消息</button>
 </div>
 <div>
-    <textarea id="messageInput" rows="4" cols="50"></textarea>
+    <textarea id="messageInput" rows="8" cols="50"></textarea>
 </div>
 <div>
     <textarea id="messageOutput" rows="4" cols="50" readonly></textarea>
@@ -20,7 +20,7 @@
     var socket;
 
     function connectWebSocket() {
-        socket = new WebSocket("ws://localhost:8080/AddMeeting?username=a&meetingUid=7bbbb101-2868-4800-88f3-fe389f25b306&userUid=d8bb06a0-b117-4c0d-9856-21950c0f063d");
+        socket = new WebSocket("ws://localhost:8080/AddMeeting?username=a&meetingUid=abd70454-646f-450e-bfda-a2f7c5cb1c6a&userUid=1a931c43-7339-4e69-9530-8bb983e35ddd");
         socket.onopen = function(event) {
             console.log("WebSocket连接已建立");
         };

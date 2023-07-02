@@ -26,7 +26,8 @@ type MeetingGroup map[string]*MeetingClient
 var Group MeetingGroup
 
 type ChanControl struct {
-	AllChan map[string]chan int
+	AllChan   map[string]chan int
+	HeartChan map[string]chan int
 }
 
 var Chan ChanControl

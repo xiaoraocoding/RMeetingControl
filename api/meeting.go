@@ -20,6 +20,7 @@ func LeaveMeeting(ctx *gin.Context) {
 		return
 	}
 	model.Chan.AllChan[user.UserUid] <- 1 // 给通道传递消息，结束掉conn链接
+	model.Chan.HeartChan[user.UserUid] <- 1
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg":      "leaveMeeting success!",
 		"userUid":  user.UserUid,
@@ -94,6 +95,7 @@ func AddMeeting(ctx *gin.Context) {
 	}
 	model.Group[meetingUid].AllConn[userUuid] = clientc
 	model.Chan.AllChan[userUuid] = make(chan int, 10)
+	model.Chan.HeartChan[userUuid] = make(chan int, 10)
 	content := initialize.Content{
 		Message:    jsonData,
 		MeetingUid: meetingUid,
@@ -185,7 +187,6 @@ func AddMeeting(ctx *gin.Context) {
 			}
 		}
 	}
-
 }
 
 var upgrader = websocket.Upgrader{

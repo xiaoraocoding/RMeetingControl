@@ -23,6 +23,7 @@ func NewMeetingClient(videoEnabled bool, meetingName string, isMute bool) *model
 
 func NewChanControl() {
 	model.Chan = model.ChanControl{
-		AllChan: map[string]chan int{},
+		AllChan:   map[string]chan int{},
+		HeartChan: map[string]chan int{},
 	}
 }
