@@ -14,7 +14,7 @@ func NewConfig(file *ini.File) {
 	LogLevel = file.Section("server").Key("LogLevel").MustInt(1)
 	QueueNum = file.Section("server").Key("QueueNum").MustInt(10)
 	Host = file.Section("redis").Key("Host").MustString("127.0.0.1")
-	Port = file.Section("redis").Key("Port").MustString("Port")
+	Port = file.Section("redis").Key("Port").MustString("6379")
 	PassWord = file.Section("redis").Key("PassWord").MustString("")
 }
 

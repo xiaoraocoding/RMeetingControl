@@ -179,11 +179,20 @@ func AddMeeting(ctx *gin.Context) {
 					return
 				}
 			} else {
-				conten := initialize.Content{
-					Message:    message,
+				msg := model.Message{
+					Notice: string(message),
+					Name:   username,
+				}
+				jsonData, err := json.Marshal(msg)
+				if err != nil {
+					initialize.Log.Error("Error json error:", err)
+					return
+				}
+				content := initialize.Content{
+					Message:    jsonData,
 					MeetingUid: meetingUid,
 				}
-				initialize.Queue.SendMsgToQueue(conten)
+				initialize.Queue.SendMsgToQueue(content)
 			}
 		}
 	}
